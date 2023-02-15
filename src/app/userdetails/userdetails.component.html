@@ -1,0 +1,114 @@
+
+ <div class="data-tbl" *ngIf="showgrid">
+    <div >
+        <button  class="btn btn-primary" type="submit" (click)="clickaction('','A','')">add login</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="tdspname" style="width: 50%;">Name</th>
+                <th class="tdspname" style="width: 45%;">Password</th>
+                <th class="tdspname" style="width: 5%;">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr *ngFor="let str of userSubject  let i=index">
+                <td class="tdspname" style="width: 50%;">{{str.username}}</td>
+                <td class="hidetext" style="width: 40%;">{{str.pwd}}</td>
+                <td class="tdspname" style="width: 5%;">
+                    <img src="../../../assets/images/edit.png" 
+                    style="cursor: pointer;" (click)="clickaction(str,'U' ,i)"
+                    >
+                    
+                </td>
+            </tr> 
+        </tbody>
+    </table>
+</div>
+
+
+<div class="card" *ngIf="showform">
+    <h4 class="card-header">{{ this.action == "U" ? "UPDATE LOGIN " : "ADD LOGIN" }}
+    </h4>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" formControlName="username" class="form-control" id="name"
+                [ngClass]="{
+                    'is-invalid': submitted && f['username'].errors
+                  }" /> 
+                  <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                    <div *ngIf="f['username'].errors['required']">
+                        username Name is required
+                    </div>
+                  </div>
+            </div>
+            <div class="mb-3  ">
+                <label class="form-label">Password</label>
+                <!-- <input [type]="showPassword ?'text':'password'" formControlName="password" class="form-control" 
+               id="pwd" 
+               [ngClass]="{
+                'is-invalid': submitted && f['password'].errors
+              }" />  -->
+             
+              <input  formControlName="password" class="form-control" 
+              id="pwd" 
+              [ngClass]="{
+               'is-invalid': submitted && f['password'].errors
+             }" /> 
+         <!-- <div *ngIf="submitted && form.controls.password.hasError('required')">
+            password  is required
+         </div> -->
+               <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                <div *ngIf="f['password'].errors['required']">
+                    password  is required
+                </div>
+                <div *ngIf="f['password'].errors['minlength']">
+                    password must be at least 8 characters
+                </div>
+            <div *ngIf="f['password'].hasError('passwordStrength')"> 
+                <!-- {{form.get('password').errors['passwordStrength']}} -->
+                {{f['password'].errors['passwordStrength']}}
+            </div>
+                <!-- <div class="error-text" *ngIf="form.get('password').hasError('passwordStrength')">
+                  {{form.get('password').errors['passwordStrength']}}
+                </div> -->
+               
+              </div> 
+
+                
+
+
+
+            
+                <!-- <i alt="show"
+                class="fa fa-eye"
+                (click)="showPassword =!showPassword"
+                [class.hide]="showPassword">
+             
+  
+                <i alt="hide"  class="fa fa-eye-slash"
+                (click)="showPassword = !showPassword"
+                [class.hide]="!showPassword">
+              
+                </i>
+        </i> -->
+              
+            </div>
+            <div >
+                <button  class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    <!-- {{ this.action == "U" ? "UPDATE " : " SAVE" }} -->
+                    SAVE
+                   
+                </button> &nbsp;
+                <button  class="btn btn-primary" (click)="cancel()">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+ 
